@@ -14,36 +14,104 @@ public class Todo_list {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        boolean continuar = true;
 
-        while (continuar) {
-            System.out.println("=== LISTA DE TAREFAS ===");
-            System.out.println("1 - Adicionar tarefa");
-            System.out.println("2 - Listar tarefas");
-            System.out.println("3 - Concluir tarefa");
-            System.out.println("4 - Excluir tarefa");
-            System.out.println("5 - Sair");
-            System.out.print("Escolha uma opção: ");
-            int opcao = scanner.nextInt();
-            scanner.nextLine(); // limpa o buffer
+        String[] tarefas = new String[10];
+        boolean[] concluidas = new boolean[10];
+
+        int opcao = 0;
+
+        while (opcao != 5) {
+            System.out.println("=========Lista de Tarefas==========");
+            System.out.println("Adicionar Tarefa: 1 ");
+            System.out.println("Listar Tarefa: 2 ");
+            System.out.println("Concluir Tarefa: 3 ");
+            System.out.println("Excluir Tarefa: 4 ");
+            System.out.println("Sair: 5 ");
+
+            System.out.println("Escolha uma opção: ");
+            opcao = scanner.nextInt();
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
-                    // chamar método/lógica de adicionar tarefa
+                    int posicaoLivre = -1;
+
+                    for (int i = 0; i < tarefas.length; i++) {
+                        if (tarefas[i] == null) {
+                            posicaoLivre = i;
+                            break;
+                        }
+                    }
+                    if (posicaoLivre == -1) {
+                        System.out.println("A lista de tarefas está cheia!");
+                    } else {
+                        System.out.println("Digite a tarefa: ");
+                        tarefas[posicaoLivre] = scanner.nextLine();
+                        concluidas[posicaoLivre] = false;
+                        System.out.println("Tarefa adicionada com sucesso!");
+                    }
                     break;
+
                 case 2:
-                    // chamar método/lógica de listar tarefas
+                    boolean listaVazia = true;
+
+                    for (int i = 0; i < tarefas.length; i++) {
+                        if (tarefas[i] != null) {
+                            listaVazia = false;
+                            break;
+                        }
+                    }
+                    if (listaVazia) {
+                        System.out.println("Nenhuma tarefa cadastrada.");
+                    } else {
+                        System.out.println("=========Minhas Tarefas==========");
+                        for (int i = 0; i < tarefas.length; i++) {
+                            if (tarefas[i] != null) {
+                                if (concluidas[i]) {
+                                    System.out.println((i + 1) + " - [X] " + tarefas[i]);
+                                } else {
+                                    System.out.println((i + 1) + " - [ ] " + tarefas[i]);
+                                }
+                            }
+                        }
+                    }
                     break;
+
                 case 3:
-                    // chamar método/lógica de concluir tarefa
+                    System.out.println("Digite o número da tarefa que deseja concluir: ");
+                    int numeroConcluir = scanner.nextInt();
+                    scanner.nextLine();
+
+                    int indiceConcluir = numeroConcluir - 1;
+
+                    if (indiceConcluir < 0 || indiceConcluir >= tarefas.length || tarefas[indiceConcluir] == null) {
+                        System.out.println("Tarefa inválida!");
+                    } else {
+                        concluidas[indiceConcluir] = true;
+                        System.out.println("Tarefa concluída com sucesso!");
+                    }
                     break;
+
                 case 4:
-                    // chamar método/lógica de excluir tarefa
+                    System.out.println("Digite o número da tarefa que deseja excluir: ");
+                    int numeroExcluir = scanner.nextInt();
+                    scanner.nextLine();
+
+                    int indiceExcluir = numeroExcluir - 1;
+
+                    if (indiceExcluir < 0 || indiceExcluir >= tarefas.length || tarefas[indiceExcluir] == null) {
+                        System.out.println("Tarefa inválida!");
+                    } else {
+                        tarefas[indiceExcluir] = null;
+                        concluidas[indiceExcluir] = false;
+                        System.out.println("Tarefa excluída com sucesso!");
+                    }
                     break;
+
                 case 5:
                     System.out.println("Programa encerrado. Até mais!");
-                    continuar = false;
                     break;
+
                 default:
                     System.out.println("Opção inválida!");
             }
@@ -54,4 +122,3 @@ public class Todo_list {
         scanner.close();
     }
 }
-
