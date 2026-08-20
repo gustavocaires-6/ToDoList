@@ -70,7 +70,7 @@ public class Todo_list {
                                  
                     }
                     }
-                    if (existeTarefa == false) {
+    cv                     if (existeTarefa == false) {
                         System.out.println("Nenhuma tarefa cadastrada! ");
                     }
                    
